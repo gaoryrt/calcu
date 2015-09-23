@@ -85,16 +85,39 @@ class ViewController: UIViewController {
         if (!inputed)
         {
             num0 = Int(resultLabel0.text!)!
-           
-
-            resultLabel0.text = ""}
-        else{
+            resultLabel0.text = ""
+        }
+        if (hexButton.enabled == false){
+            switch sender.currentTitle!! {
+            
+                case "A": num1 = (num1 * 16) + 10
+                case "B": num1 = (num1 * 16) + 11
+                case "C": num1 = (num1 * 16) + 12
+                case "D": num1 = (num1 * 16) + 13
+                case "E": num1 = (num1 * 16) + 14
+                case "F": num1 = (num1 * 16) + 15
+             default: num1 = (num1 * 16) + Int(sender.currentTitle!!)!
+            }
             
         }
-        resultLabel0.text! +=  sender.currentTitle!!
-        inputed = true
+        if (decButton.enabled == false){
+            num1 = (num1 * 10) + Int(sender.currentTitle!!)!
+        }
+        if (octButton.enabled == false){
+            num1 = (num1 * 8) + Int(sender.currentTitle!!)!
+        }
+        if (binButton.enabled == false){
+            num1 = (num1 * 2) + Int(sender.currentTitle!!)!
+        }
         
-        temp0 = Int(resultLabel0.text!)!
+        
+        
+        
+        
+        
+        temp0 = num1
+        resultLabel0.text! += sender.currentTitle!!
+        inputed = true
         out.text = String(temp0)//存储到temp
         
     }
@@ -132,6 +155,8 @@ class ViewController: UIViewController {
         temp1 = ""
         
     }
+    
+    
     
     
     
@@ -240,7 +265,10 @@ class ViewController: UIViewController {
         NumbackgroundColorSet(N8B)
         NumbackgroundColorSet(N9B)
         
+        resultLabel0.text = String(num1)
         
+        temp1 = ""
+
         
         
     }
@@ -259,7 +287,7 @@ class ViewController: UIViewController {
     @IBAction func opeButton(sender: AnyObject) {
         if inputed {
             if ((opeTemp == "Mod") || (opeTemp == "*") || (opeTemp == "/") || (opeTemp == "+") || (opeTemp == "-") ){
-                num1 = Int(resultLabel0.text!)!
+//                num1 = Int(resultLabel0.text!)!
                 switch opeTemp{
                 case "*": resultLabel0.text = String(num0 * Int(resultLabel0.text!)!)
                 case "/": resultLabel0.text = String(num0 / Int(resultLabel0.text!)!)
@@ -300,7 +328,7 @@ class ViewController: UIViewController {
     @IBAction func equButton(sender: AnyObject) {
         if inputed {
             if ((opeTemp == "Mod") || (opeTemp == "*") || (opeTemp == "/") || (opeTemp == "+") || (opeTemp == "-") ){
-                num1 = Int(resultLabel0.text!)!
+                //num1 = Int(resultLabel0.text!)!
                 switch opeTemp{
                 case "*": resultLabel0.text = String(num0 * Int(resultLabel0.text!)!)
                 case "/": resultLabel0.text = String(num0 / Int(resultLabel0.text!)!)
