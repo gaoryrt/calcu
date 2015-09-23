@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
 
+    @IBOutlet weak var out: UILabel!
     @IBOutlet weak var opeLabel: UILabel!
     @IBOutlet weak var resultLabel0: UILabel!
     @IBOutlet weak var hexButton: UIButton!
@@ -34,13 +35,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var NEB: UIButton!
     @IBOutlet weak var NFB: UIButton!
     
+    //方法1: 定义一个变量表示原进制，另一个Int表示目的进制，原进制2，8，10，16进制用数字0，1，2，3表示；目的进制用1，5，9，13表示
+    //      进行进制转换调用一转换函数，函数通过原进制和目的进制变量的和得知（4*4-4）中的一种转换   需要写12种转换方式
+    //方法2: swift里面吧所有的0x 0o 0b全部以十进制存储
+    //      在输入的时候，实时将String转换为Int  专为十进制的时候只用一个方法，转出方法（短除法）也只有一中
+    //      需要一个temp放十进制的数，每次进制转换都从temp来转 
+    //      可以用resultLabel0直接接短除法的输出的，但是resultLabel0会在用户面前变化，为了避免这种情况发生，需要一个String来记录输出  
+    //      用一个变量告诉转入十进制方法原进制，告诉转出方法目的进制
     
     
     
-    
-    
+    var temp0:Int = 0
+    var scale:Int = 10
     var num1:Int = 0
     var num0:Int = 0
+    var temp1:String = ""
     //缓存
     var inputed:Bool = false
     //有数字输入
@@ -85,8 +94,47 @@ class ViewController: UIViewController {
         resultLabel0.text! +=  sender.currentTitle!!
         inputed = true
         
+        temp0 = Int(resultLabel0.text!)!
+        out.text = String(temp0)//存储到temp
+        
     }
+    
+    
+    
     //以下是进制转换
+    func DtoX( numX: Int ){
+        var temp = temp0 / numX
+        let temp2 = temp0
+        var consult = 0
+        while(temp != 0){
+            consult = temp0 % numX
+            switch consult{
+            case 10: temp1 = "A" + temp1
+            case 11: temp1 = "B" + temp1
+            case 12: temp1 = "C" + temp1
+            case 13: temp1 = "D" + temp1
+            case 14: temp1 = "E" + temp1
+            case 15: temp1 = "F" + temp1
+            default: temp1 = String(consult) + temp1
+            }
+            
+            temp0 = temp0 / numX
+            temp = temp0
+        }
+        temp0 = temp2
+        temp = temp0 / numX
+        if(temp == 0){
+            consult = temp0 % numX
+            temp1 = String(consult) + temp1
+        }
+        resultLabel0.text = String(temp1)
+        
+        temp1 = ""
+        
+    }
+    
+    
+    
     func PVNreset(sender: UIButton){
         //左边四个进制按键的表示
         hexButton.backgroundColor=UIColor.blackColor()
@@ -104,6 +152,7 @@ class ViewController: UIViewController {
         sender.backgroundColor = UIColor.whiteColor()
         sender.setTitleColor(UIColor.blackColor(),forState: .Normal)
         sender.enabled = false
+        
     }
     func Numreset(){
         
@@ -150,12 +199,14 @@ class ViewController: UIViewController {
         NumbackgroundColorSet(N6B)
         NumbackgroundColorSet(N7B)
         
+        DtoX(8)
+        
         
         
         
     }
     @IBAction func hexAction(sender: AnyObject) {
-        //化为16进制
+        //化为十六进制
         PVNreset(hexButton)
         Numreset()
      
@@ -173,7 +224,7 @@ class ViewController: UIViewController {
         NumbackgroundColorSet(NDB)
         NumbackgroundColorSet(NEB)
         NumbackgroundColorSet(NFB)
-        
+        DtoX(16)
     }
     @IBAction func decAction(sender: AnyObject) {
         // 二进制化十进制
@@ -191,21 +242,13 @@ class ViewController: UIViewController {
         
         
         
-        var Dec = Int(resultLabel0.text!)!
-        var i = 1
-        var Bin = 0
-        while(Dec != 0)
-        {
-            Bin += (Dec%2)*i
-            Dec = Dec / 10
-            i *= 2
-        }
-        resultLabel0.text = String(Bin)
+        
     }
     @IBAction func binAction(sender: AnyObject) {
         //化为二进制
         PVNreset(binButton)
         Numreset()
+        DtoX(2)
         
         
        
@@ -239,6 +282,9 @@ class ViewController: UIViewController {
             opeTemp = sender.currentTitle!!
         }
        opeLabel.text = sender.currentTitle
+    
+        temp0 = Int(resultLabel0.text!)!
+        out.text = String(temp0)//存储到temp
     }
 
     @IBAction func cleButton(sender: AnyObject) {
@@ -247,6 +293,9 @@ class ViewController: UIViewController {
         opeTemp = ""
         resultLabel0.text = "0"
         inputed = false
+        
+        temp0 = Int(resultLabel0.text!)!
+        out.text = String(temp0)//存储到temp
     }
     @IBAction func equButton(sender: AnyObject) {
         if inputed {
@@ -274,6 +323,9 @@ class ViewController: UIViewController {
             opeTemp = ""
         
         opeLabel.text = "="
+        
+        temp0 = Int(resultLabel0.text!)!
+        out.text = String(temp0)//存储到temp
     }
         
 }
