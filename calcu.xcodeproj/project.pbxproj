@@ -16,7 +16,7 @@
 
 /* Begin PBXFileReference section */
 		D1C89BA21BAFA3EE00CF7FB0 /* calcu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = calcu.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D1C89BA51BAFA3EE00CF7FB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D1C89BA51BAFA3EE00CF7FB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 0; };
 		D1C89BA71BAFA3EE00CF7FB0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D1C89BAA1BAFA3EE00CF7FB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D1C89BAC1BAFA3EE00CF7FB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -284,6 +284,7 @@
 				D1C89BB61BAFA3EE00CF7FB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

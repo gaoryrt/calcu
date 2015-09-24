@@ -35,6 +35,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var NEB: UIButton!
     @IBOutlet weak var NFB: UIButton!
     
+    @IBOutlet weak var DB: UIButton!
+    @IBOutlet weak var TB: UIButton!
+    @IBOutlet weak var MB: UIButton!
+    @IBOutlet weak var PB: UIButton!
+    @IBOutlet weak var ModB: UIButton!
+    @IBOutlet weak var EB: UIButton!
+    
+    @IBOutlet weak var cycLeft: UIButton!
+    @IBOutlet weak var cycRight: UIButton!
+    @IBOutlet weak var orButton: UIButton!
+    @IBOutlet weak var xorButton: UIButton!
+    @IBOutlet weak var left: UIButton!
+    @IBOutlet weak var right: UIButton!
+    @IBOutlet weak var notButton: UIButton!
+    @IBOutlet weak var andButton: UIButton!
+    
     //方法1: 定义一个变量表示原进制，另一个Int表示目的进制，原进制2，8，10，16进制用数字0，1，2，3表示；目的进制用1，5，9，13表示
     //      进行进制转换调用一转换函数，函数通过原进制和目的进制变量的和得知（4*4-4）中的一种转换   需要写12种转换方式
     //方法2: swift里面吧所有的0x 0o 0b全部以十进制存储
@@ -50,6 +66,7 @@ class ViewController: UIViewController {
     var num1:Int = 0
     var num0:Int = 0
     var temp1:String = ""
+    
     //缓存
     var inputed:Bool = false
     //有数字输入
@@ -62,6 +79,13 @@ class ViewController: UIViewController {
         PVNreset(decButton)
         Numreset()
         
+        NumbackgroundColorSet(DB)
+        NumbackgroundColorSet(TB)
+        NumbackgroundColorSet(MB)
+        NumbackgroundColorSet(PB)
+        NumbackgroundColorSet(ModB)
+        NumbackgroundColorSet(EB)
+        
         NumbackgroundColorSet(N2B)
         NumbackgroundColorSet(N3B)
         NumbackgroundColorSet(N4B)
@@ -72,14 +96,43 @@ class ViewController: UIViewController {
         NumbackgroundColorSet(N9B)
         
         
+        
+        
+        
+        
         //将屏幕上的数值初始化
         // Do any additional setup after loading the view, typically from a nib.
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func backspaceAction(sender: AnyObject) {
+        if (binButton.enabled == false)
+        {
+            resultLabel0.text = String(Int(resultLabel0.text!)!/10)
+            num1 = temp0 / 2
+        }
+        if (octButton.enabled == false)
+        {
+            resultLabel0.text = String(Int(resultLabel0.text!)!/10)
+            num1 = temp0 / 8
+        }
+        if (hexButton.enabled == false)
+        {
+            resultLabel0.text = String(Int(resultLabel0.text!)!/10)
+            num1 = temp0 / 16
+        }
+        if (decButton.enabled == false)
+        {
+            resultLabel0.text = String(Int(resultLabel0.text!)!/10)
+            num1 = temp0 / 10
+        }
+        
+        temp0 = num1
+        out.text = String(temp0)
+    }
+    
     
     @IBAction func numButton(sender: AnyObject) {
         if (!inputed)
@@ -155,27 +208,23 @@ class ViewController: UIViewController {
         temp1 = ""
         
     }
-    
-    
-    
-    
-    
     func PVNreset(sender: UIButton){
         //左边四个进制按键的表示
-        hexButton.backgroundColor=UIColor.blackColor()
-        hexButton.setTitleColor(UIColor.whiteColor(),forState: .Normal)
-        octButton.backgroundColor=UIColor.blackColor()
-        octButton.setTitleColor(UIColor.whiteColor(),forState: .Normal)
-        binButton.backgroundColor=UIColor.blackColor()
-        binButton.setTitleColor(UIColor.whiteColor(),forState: .Normal)
-        decButton.backgroundColor=UIColor.blackColor()
-        decButton.setTitleColor(UIColor.whiteColor(),forState: .Normal)
+        hexButton.backgroundColor=UIColor.whiteColor()
+        hexButton.setTitleColor(UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1),forState: .Normal)
+        octButton.backgroundColor=UIColor.whiteColor()
+        octButton.setTitleColor(UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1),forState: .Normal)
+        binButton.backgroundColor=UIColor.whiteColor()
+        binButton.setTitleColor(UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1),forState: .Normal)
+        decButton.backgroundColor=UIColor.whiteColor()
+        decButton.setTitleColor(UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1),forState: .Normal)
         hexButton.enabled = true
         octButton.enabled = true
         binButton.enabled = true
         decButton.enabled = true
         sender.backgroundColor = UIColor.whiteColor()
         sender.setTitleColor(UIColor.blackColor(),forState: .Normal)
+        
         sender.enabled = false
         
     }
@@ -196,22 +245,34 @@ class ViewController: UIViewController {
         NumbackgroundColorReset(NEB)
         NumbackgroundColorReset(NFB)
         
+        NumbackgroundColorReset(DB)
+        NumbackgroundColorReset(TB)
+        NumbackgroundColorReset(MB)
+        NumbackgroundColorReset(PB)
+        NumbackgroundColorReset(ModB)
+        NumbackgroundColorReset(EB)
+        
+        NumbackgroundColorReset(cycLeft)
+        NumbackgroundColorReset(cycRight)
+        NumbackgroundColorReset(left)
+        NumbackgroundColorReset(right)
+        NumbackgroundColorReset(orButton)
+        NumbackgroundColorReset(xorButton)
+        NumbackgroundColorReset(notButton)
+        NumbackgroundColorReset(andButton)
+        
         
     }
-    
     func NumbackgroundColorSet(sender: UIButton){
         sender.backgroundColor=UIColor.whiteColor()
         sender.setTitleColor(UIColor.blackColor(),forState: .Normal)
         sender.enabled = true
     }
-    
     func NumbackgroundColorReset(sender: UIButton){
-        sender.backgroundColor=UIColor.blackColor()
-        sender.setTitleColor(UIColor.grayColor(),forState: .Normal)
+        //sender.backgroundColor=UIColor.blackColor()
+        sender.setTitleColor(UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1),forState: .Normal)
         sender.enabled = false
     }
-    
-    
     @IBAction func octAction(sender: AnyObject) {
         //化为八进制
         PVNreset(octButton)
@@ -251,10 +312,17 @@ class ViewController: UIViewController {
         NumbackgroundColorSet(NFB)
         DtoX(16)
     }
+
     @IBAction func decAction(sender: AnyObject) {
-        // 二进制化十进制
         PVNreset(decButton)
         Numreset()
+        
+        NumbackgroundColorSet(DB)
+        NumbackgroundColorSet(TB)
+        NumbackgroundColorSet(MB)
+        NumbackgroundColorSet(PB)
+        NumbackgroundColorSet(ModB)
+        NumbackgroundColorSet(EB)
         
         NumbackgroundColorSet(N2B)
         NumbackgroundColorSet(N3B)
@@ -265,12 +333,12 @@ class ViewController: UIViewController {
         NumbackgroundColorSet(N8B)
         NumbackgroundColorSet(N9B)
         
+        
+        
+        
         resultLabel0.text = String(num1)
         
         temp1 = ""
-
-        
-        
     }
     @IBAction func binAction(sender: AnyObject) {
         //化为二进制
@@ -278,13 +346,21 @@ class ViewController: UIViewController {
         Numreset()
         DtoX(2)
         
+        NumbackgroundColorSet(cycLeft)
+        NumbackgroundColorSet(cycRight)
+        NumbackgroundColorSet(left)
+        NumbackgroundColorSet(right)
+        NumbackgroundColorSet(orButton)
+        NumbackgroundColorSet(xorButton)
+        NumbackgroundColorSet(notButton)
+        NumbackgroundColorSet(andButton)
         
        
         
     }
     //以上是进制转换
-    
     @IBAction func opeButton(sender: AnyObject) {
+        
         if inputed {
             if ((opeTemp == "Mod") || (opeTemp == "*") || (opeTemp == "/") || (opeTemp == "+") || (opeTemp == "-") ){
 //                num1 = Int(resultLabel0.text!)!
@@ -301,7 +377,7 @@ class ViewController: UIViewController {
             }
             else{
                 num0 = Int(resultLabel0.text!)!
-               
+                
             }
             opeTemp = sender.currentTitle!!
             inputed = false
@@ -314,7 +390,6 @@ class ViewController: UIViewController {
         temp0 = Int(resultLabel0.text!)!
         out.text = String(temp0)//存储到temp
     }
-
     @IBAction func cleButton(sender: AnyObject) {
         num0 = 0
         num1 = 0
