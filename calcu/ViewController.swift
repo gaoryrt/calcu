@@ -67,6 +67,9 @@ class ViewController: UIViewController {
     var num0:Int = 0
     var temp1:String = ""
     
+    var fig:Int = 0
+    var Index:String = ""
+    var Sub:String = ""
     //缓存
     var inputed:Bool = false
     //有数字输入
@@ -112,6 +115,7 @@ class ViewController: UIViewController {
         {
             resultLabel0.text = String(Int(resultLabel0.text!)!/10)
             num1 = temp0 / 2
+            
         }
         if (octButton.enabled == false)
         {
@@ -161,6 +165,7 @@ class ViewController: UIViewController {
         }
         if (binButton.enabled == false){
             num1 = (num1 * 2) + Int(sender.currentTitle!!)!
+            
         }
         
         
@@ -174,6 +179,54 @@ class ViewController: UIViewController {
         out.text = String(temp0)//存储到temp
         
     }
+    @IBAction func cycR(sender: AnyObject) {
+        fig = resultLabel0.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding)
+        
+        Index = (resultLabel0.text! as NSString).substringToIndex((fig-1) / 2)
+        resultLabel0.text = "0" + Index
+        out.text = BtoD(resultLabel0.text!)
+        temp0 = Int(out.text!)!
+    }
+    @IBAction func cycL(sender: AnyObject) {
+        fig = resultLabel0.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding)
+        Sub = (resultLabel0.text! as NSString).substringFromIndex(1)
+        
+        resultLabel0.text = Sub + "0"
+        out.text = BtoD(resultLabel0.text!)
+        temp0 = Int(BtoD(resultLabel0.text!))!
+    }
+    @IBAction func cycLAction(sender: AnyObject) {
+        fig = resultLabel0.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding)
+        Sub = (resultLabel0.text! as NSString).substringFromIndex(1)
+        Index = (resultLabel0.text! as NSString).substringToIndex(1)
+        resultLabel0.text = Sub + Index
+        out.text = BtoD(resultLabel0.text!)
+        temp0 = Int(BtoD(resultLabel0.text!))!
+    }
+    @IBAction func sysRAction(sender: AnyObject) {
+        fig = resultLabel0.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding)
+        Sub = (resultLabel0.text! as NSString).substringFromIndex((fig-1) / 2)
+        Index = (resultLabel0.text! as NSString).substringToIndex((fig-1) / 2)
+        resultLabel0.text = Sub + Index
+        out.text = BtoD(resultLabel0.text!)
+        temp0 = Int(out.text!)!
+    }
+    func BtoD(string: String) -> String{
+        var stringtonumber = Int(string)!
+        var output = 0
+        var Xtimes = 1
+        while ((stringtonumber/10) != 0 ){
+            
+            output = output + ((stringtonumber % 2) * Xtimes)
+            stringtonumber =  stringtonumber / 10
+            Xtimes = Xtimes * 2
+        }
+        output = output + ((stringtonumber % 2) * Xtimes)
+        return String(output)
+        
+    }
+    
+    
     
     
     
@@ -336,7 +389,7 @@ class ViewController: UIViewController {
         
         
         
-        resultLabel0.text = String(num1)
+        resultLabel0.text = String(temp0)
         
         temp1 = ""
     }
@@ -359,6 +412,12 @@ class ViewController: UIViewController {
         
     }
     //以上是进制转换
+    
+    
+    
+    
+    
+    
     @IBAction func opeButton(sender: AnyObject) {
         
         if inputed {
@@ -396,6 +455,7 @@ class ViewController: UIViewController {
         opeTemp = ""
         resultLabel0.text = "0"
         inputed = false
+        fig = 0
         
         temp0 = Int(resultLabel0.text!)!
         out.text = String(temp0)//存储到temp

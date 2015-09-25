@@ -323,6 +323,9 @@
                                 <state key="normal" title="←">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="cycL:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lm7-mv-qWD"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UVb-MZ-AHI">
                                 <rect key="frame" x="122" y="214" width="53" height="53"/>
@@ -332,6 +335,9 @@
                                 <state key="normal" title="→">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="cycR:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6po-ri-bHY"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LZP-mR-XFd">
                                 <rect key="frame" x="515" y="214" width="53" height="53"/>
@@ -395,6 +401,9 @@
                                 <state key="normal" title="⇤">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="cycLAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="19K-nl-5fa"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jpu-tL-30s">
                                 <rect key="frame" x="122" y="108" width="53" height="53"/>
@@ -404,6 +413,9 @@
                                 <state key="normal" title="⇥">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="sysRAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w4m-RB-i0z"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ay1-U9-tmz">
                                 <rect key="frame" x="515" y="108" width="53" height="53"/>
