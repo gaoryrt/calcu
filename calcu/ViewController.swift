@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var out: UILabel!
     @IBOutlet weak var opeLabel: UILabel!
     @IBOutlet weak var resultLabel0: UILabel!
+    @IBOutlet weak var resultLabel1: UILabel!
     @IBOutlet weak var hexButton: UIButton!
     @IBOutlet weak var decButton: UIButton!
     @IBOutlet weak var octButton: UIButton!
@@ -51,6 +52,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var notButton: UIButton!
     @IBOutlet weak var andButton: UIButton!
     
+    
+    
     //方法1: 定义一个变量表示原进制，另一个Int表示目的进制，原进制2，8，10，16进制用数字0，1，2，3表示；目的进制用1，5，9，13表示
     //      进行进制转换调用一转换函数，函数通过原进制和目的进制变量的和得知（4*4-4）中的一种转换   需要写12种转换方式
     //方法2: swift里面吧所有的0x 0o 0b全部以十进制存储
@@ -68,8 +71,13 @@ class ViewController: UIViewController {
     var temp1:String = ""
     
     var fig:Int = 0
+    var fig1:Int = 0
     var Index:String = ""
     var Sub:String = ""
+    
+    var LogicOpeTemp0:String = "0"//被运算的数缓存在这里
+    var LogicOpeTemp1:String = "0"
+    
     //缓存
     var inputed:Bool = false
     //有数字输入
@@ -106,6 +114,7 @@ class ViewController: UIViewController {
         //将屏幕上的数值初始化
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -134,9 +143,14 @@ class ViewController: UIViewController {
         }
         
         temp0 = num1
-        out.text = String(temp0)
+        tiaoshi()
     }
     
+    
+    func tiaoshi(){
+        //out.text = " temp0_" + String(temp0) + " scale_" + String(scale) + " num1_" + String(num1) + " num0_" + String (num0) + " fig_" + String(fig) + " temp1_" + temp1 + " temp0_" + Index + " sub_" + Sub + " logic0_" + LogicOpeTemp0 + " logic1_" + LogicOpeTemp1 + " opetemp_" + opeTemp
+        
+    }
     
     @IBAction func numButton(sender: AnyObject) {
         if (!inputed)
@@ -176,23 +190,87 @@ class ViewController: UIViewController {
         temp0 = num1
         resultLabel0.text! += sender.currentTitle!!
         inputed = true
-        out.text = String(temp0)//存储到temp
-        
+        tiaoshi()
     }
+    
+    @IBAction func LogicOpeAction(sender: AnyObject) {
+        
+        resultLabel1.text = resultLabel0.text
+        
+        num0 = 0
+        num1 = 0
+        opeTemp = ""
+        resultLabel0.text = "0"
+        inputed = false
+        fig = 0
+        fig1 = 0
+        temp0 = 0
+        temp0 = Int(resultLabel0.text!)!
+        
+        opeLabel.text = sender.currentTitle
+    }
+    
+    @IBAction func LogicOpe(sender: AnyObject) {
+        fig = resultLabel0.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding) / 2
+        fig1 = resultLabel1.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding) / 2
+        
+        if(fig1 >= fig)
+        {
+            while(fig1 == fig)
+            {
+                resultLabel0.text = "0" + resultLabel0.text!
+                fig = resultLabel0.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding) / 2
+            }
+        }
+        else {
+            while(fig1 == fig)
+            {
+                resultLabel1.text = "0" + resultLabel1.text!
+                fig1 = resultLabel1.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding) / 2
+            }
+        }
+        
+        
+        var t0 = ""
+        var t1 = ""
+        while(fig != 0){
+            
+//        LogicOpeTemp0 = (resultLabel0.text! as NSString).substringToIndex(1)
+//        LogicOpeTemp1 = (resultLabel1.text! as NSString).substringToIndex(1)
+        LogicOpeTemp0 = (resultLabel0.text! as NSString).substringWithRange(NSMakeRange((fig - 1), 1))
+        LogicOpeTemp1 = (resultLabel1.text! as NSString).substringWithRange(NSMakeRange((fig1 - 1), 1))
+
+        switch opeLabel.text! {
+        case "Or": if(Int(LogicOpeTemp0)! + Int(LogicOpeTemp1)! != 0){t0 = "1"}else{t0 = "0"}
+        case "Xor": if(LogicOpeTemp0 == LogicOpeTemp1){t0 = "0"}else{t0 = "1"}
+        case "Not": if(LogicOpeTemp1 == "0"){t0 = "1"}else{t0 = "0"}
+            case "And": if(Int(LogicOpeTemp0)! + Int(LogicOpeTemp1)! == 2){t0 = "1"}else{t0 = "0"}
+        default: resultLabel1.text = LogicOpeTemp0 + " " + LogicOpeTemp1
+        }
+            t1 = t0 + t1
+            fig--
+        }
+        
+        resultLabel0.text = String(t1)
+    }
+    
+    
     @IBAction func cycR(sender: AnyObject) {
         fig = resultLabel0.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding)
         
         Index = (resultLabel0.text! as NSString).substringToIndex((fig-1) / 2)
         resultLabel0.text = "0" + Index
-        out.text = BtoD(resultLabel0.text!)
-        temp0 = Int(out.text!)!
+        tiaoshi()
+
+        temp0 = Int(BtoD(resultLabel0.text!))!
     }
     @IBAction func cycL(sender: AnyObject) {
         fig = resultLabel0.text!.lengthOfBytesUsingEncoding(NSUTF16StringEncoding)
         Sub = (resultLabel0.text! as NSString).substringFromIndex(1)
         
         resultLabel0.text = Sub + "0"
-        out.text = BtoD(resultLabel0.text!)
+        tiaoshi()
+
         temp0 = Int(BtoD(resultLabel0.text!))!
     }
     @IBAction func cycLAction(sender: AnyObject) {
@@ -200,7 +278,8 @@ class ViewController: UIViewController {
         Sub = (resultLabel0.text! as NSString).substringFromIndex(1)
         Index = (resultLabel0.text! as NSString).substringToIndex(1)
         resultLabel0.text = Sub + Index
-        out.text = BtoD(resultLabel0.text!)
+        tiaoshi()
+
         temp0 = Int(BtoD(resultLabel0.text!))!
     }
     @IBAction func sysRAction(sender: AnyObject) {
@@ -208,8 +287,9 @@ class ViewController: UIViewController {
         Sub = (resultLabel0.text! as NSString).substringFromIndex((fig-1) / 2)
         Index = (resultLabel0.text! as NSString).substringToIndex((fig-1) / 2)
         resultLabel0.text = Sub + Index
-        out.text = BtoD(resultLabel0.text!)
-        temp0 = Int(out.text!)!
+        tiaoshi()
+
+        temp0 = Int(BtoD(resultLabel0.text!))!
     }
     func BtoD(string: String) -> String{
         var stringtonumber = Int(string)!
@@ -447,7 +527,8 @@ class ViewController: UIViewController {
        opeLabel.text = sender.currentTitle
     
         temp0 = Int(resultLabel0.text!)!
-        out.text = String(temp0)//存储到temp
+        tiaoshi()
+//存储到temp
     }
     @IBAction func cleButton(sender: AnyObject) {
         num0 = 0
@@ -458,7 +539,8 @@ class ViewController: UIViewController {
         fig = 0
         
         temp0 = Int(resultLabel0.text!)!
-        out.text = String(temp0)//存储到temp
+        tiaoshi()
+//存储到temp
     }
     @IBAction func equButton(sender: AnyObject) {
         if inputed {
@@ -488,7 +570,8 @@ class ViewController: UIViewController {
         opeLabel.text = "="
         
         temp0 = Int(resultLabel0.text!)!
-        out.text = String(temp0)//存储到temp
+        tiaoshi()
+//存储到temp
     }
         
 }
